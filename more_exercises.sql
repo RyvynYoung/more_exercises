@@ -270,6 +270,7 @@ where city.Name = 'Austin';
 -- Sakila Database
 use sakila; 
 
+
 -- Display the first and last names in all lowercase of all the actors.
 select lower(first_name), lower(last_name)
 from actor;
@@ -362,11 +363,29 @@ from film
 join language using(language_id)
 where title like 'K%' or title like 'Q%' and name = 'English';
 
+-- using subquery
+select title
+from film
+where title like 'K%' or title like 'Q%' and language_id in (select language_id from language where name = 'English');
+
+
 -- Use subqueries to display all actors who appear in the film Alone Trip.
+select concat(first_name, ' ', last_name)
+from actor
+where actor_id in (select actor_id from film_actor
+where film_id in (select film_id from film where title = 'Alone Trip'))
+;
 
 -- You want to run an email marketing campaign in Canada, for which you will need the names and email addresses of all Canadian customers.
+select concat(first_name, ' ', last_name), email from customer 
+where customer_id in (
+select address_id from address where city_id in (select city_id from city where country_id in (select country_id from country where country = 'Canada'))
+);
 
 -- Sales have been lagging among young families, and you wish to target all family movies for a promotion. Identify all movies categorized as famiy films.
+select * from film where film_id in (
+select film_id from film_category where category_id in (select category_id from category where name = 'family')
+);
 
 -- Write a query to display how much business, in dollars, each store brought in.
 
