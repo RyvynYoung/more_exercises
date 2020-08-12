@@ -388,27 +388,48 @@ select film_id from film_category where category_id in (select category_id from 
 );
 
 -- Write a query to display how much business, in dollars, each store brought in.
+select store_id, sum(amount) total_sales from payment join store on store.manager_staff_id = payment.staff_id group by store_id;
 
 -- Write a query to display for each store its store ID, city, and country.
+select store_id, city, country
+from store
+join address using(address_id)
+join city using(city_id)
+join country using(country_id);
 
 -- List the top five genres in gross revenue in descending order.
 -- (Hint: you may need to use the following tables: category, film_category, inventory, payment, and rental.)
-
-
+select name, sum(amount) 'gross revenue'
+from category
+join film_category using(category_id)
+join inventory using(film_id)
+join rental using(inventory_id)
+join payment using(rental_id)
+group by name;
 
 
 -- SELECT statements
 -- Select all columns from the actor table.
+select * from actor;
+
 -- Select only the last_name column from the actor table.
+select last_name from actor;
+
 -- Select only the following columns from the film table.
 -- DISTINCT operator
-
 -- Select all distinct (different) last names from the actor table.
--- Select all distinct (different) postal codes from the address table.
--- Select all distinct (different) ratings from the film table.
--- WHERE clause
+select distinct last_name from actor;
 
+-- Select all distinct (different) postal codes from the address table.
+select distinct postal_code from address;
+
+-- Select all distinct (different) ratings from the film table.
+select distinct rating from film;
+
+-- WHERE clause
 -- Select the title, description, rating, movie length columns from the films table that last 3 hours or longer.
+
+
 -- Select the payment id, amount, and payment date columns from the payments table for payments made on or after 05/27/2005.
 -- Select the primary key, amount, and payment date columns from the payment table for payments made on 05/27/2005.
 -- Select all columns from the customer table for rows that have a last names beginning with S and a first names ending with N.
