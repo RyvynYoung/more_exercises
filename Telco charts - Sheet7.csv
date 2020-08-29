@@ -1,0 +1,7 @@
+discount cost and predicted churn reduction,total contracts,# people leave,% churn,monthly cost to replace customers,average monthly charge of those who leave,average monthly charge of those who stay,% difference between go/stay,average monthly charge,calculated revenue lost,calculated revenue remaining,net with replacement cost
+no change,696,459,65.95%,"$144,585",$72,$64,10.94%,$69,"$32,855","$15,109","-$96,621"
+10% red chrun,696,413,59.35%,"$130,127",$62,$62,0.00%,$62,"$25,624","$17,548","-$86,955"
+30% red churn,696,321,46.16%,"$101,210",$62,$62,0.00%,$62,"$19,930","$23,242","-$58,038"
+50% red churn,696,230,32.97%,"$72,293",$62,$62,0.00%,$62,"$14,235","$28,936","-$29,121"
+70% red churn,696,138,19.78%,"$43,376",$62,$62,0.00%,$62,"$8,541","$34,630",-$204
+90% red churn,696,46,6.59%,"$14,459",$62,$62,0.00%,$62,"$2,847","$40,324","$28,713"
