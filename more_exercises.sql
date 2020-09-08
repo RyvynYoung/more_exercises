@@ -460,11 +460,16 @@ where password is not null;
 select staff_id, first_name, last_name, address_id, picture, email, store_id, active, username, last_update from staff
 where password is null;
 
+use sakila;
 -- IN operator
 -- Select the phone and district columns from the address table for addresses in California, England, Taipei, or West Java.
--- Select the payment id, amount, and payment date columns from the payment table for payments made on 05/25/2005, 05/27/2005, and 05/29/2005. (Use the IN operator and the DATE function, instead of the AND operator as in previous exercises.)
--- Select all columns from the film table for films rated G, PG-13 or NC-17.
+select phone, district from address where district in ('California', 'England', 'Taipei', 'West Java');
 
+-- Select the payment id, amount, and payment date columns from the payment table for payments made on 05/25/2005, 05/27/2005, and 05/29/2005. (Use the IN operator and the DATE function, instead of the AND operator as in previous exercises.)
+select payment_id, amount, payment_date from payment where YEAR(payment_date) = 2005 and MONTH(payment_date) = 05 and dayofmonth(payment_date) in (25, 27, 29);
+
+-- Select all columns from the film table for films rated G, PG-13 or NC-17.
+select * from film where rating in ('G', 'PG-13', 'NC-17');
 
 -- BETWEEN operator
 -- Select all columns from the payment table for payments made between midnight 05/25/2005 and 1 second before midnight 05/26/2005.
