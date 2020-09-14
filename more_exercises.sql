@@ -473,8 +473,13 @@ select * from film where rating in ('G', 'PG-13', 'NC-17');
 
 -- BETWEEN operator
 -- Select all columns from the payment table for payments made between midnight 05/25/2005 and 1 second before midnight 05/26/2005.
+use sakila;
+select * from payment where payment_date between '2005-05-25' and '2005-05-26';
+
 -- Select the following columns from the film table for films where the length of the description is between 100 and 120.
 -- Hint: total_rental_cost = rental_duration * rental_rate
+use sakila;
+select rental_duration, rental_rate, (rental_duration * rental_rate) as total_rental_cost from film where length between 100 and 120;
 
 -- LIKE operator
 -- Select the following columns from the film table for rows where the description begins with "A Thoughtful".
