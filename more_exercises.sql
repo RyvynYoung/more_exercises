@@ -483,15 +483,23 @@ select rental_duration, rental_rate, (rental_duration * rental_rate) as total_re
 
 -- LIKE operator
 -- Select the following columns from the film table for rows where the description begins with "A Thoughtful".
--- Select the following columns from the film table for rows where the description ends with the word "Boat".
--- Select the following columns from the film table where the description contains the word "Database" and the length of the film is greater than 3 hours.
+use sakila;
+select * from film where description like 'A Thoughtful%';
 
+-- Select the following columns from the film table for rows where the description ends with the word "Boat".
+select * from film where description like '%Boat';
+
+-- Select the following columns from the film table where the description contains the word "Database" and the length of the film is greater than 3 hours.
+select * from film where description like '%Database%' and length > 180;
 
 -- LIMIT Operator
 -- Select all columns from the payment table and only include the first 20 rows.
--- Select the payment date and amount columns from the payment table for rows where the payment amount is greater than 5, and only select rows whose zero-based index in the result set is between 1000-2000.
--- Select all columns from the customer table, limiting results to those where the zero-based index is between 101-200.
+select * from payment limit 20;
 
+-- Select the payment date and amount columns from the payment table for rows where the payment amount is greater than 5, and only select rows whose zero-based index in the result set is between 1000-2000.
+select payment_date, amount from payment where amount > 5 limit 1000 offset 1000;
+-- Select all columns from the customer table, limiting results to those where the zero-based index is between 101-200.
+select * from customer limit 100 offset 100;
 
 -- ORDER BY statement
 -- Select all columns from the film table and order rows by the length field in ascending order.
