@@ -503,10 +503,19 @@ select * from customer limit 100 offset 100;
 
 -- ORDER BY statement
 -- Select all columns from the film table and order rows by the length field in ascending order.
--- Select all distinct ratings from the film table ordered by rating in descending order.
--- Select the payment date and amount columns from the payment table for the first 20 payments ordered by payment amount in descending order.
--- Select the title, description, special features, length, and rental duration columns from the film table for the first 10 films with behind the scenes footage under 2 hours in length and a rental duration between 5 and 7 days, ordered by length in descending order.
+select * from film order by length;
 
+-- Select all distinct ratings from the film table ordered by rating in descending order.
+select distinct(rating) from film order by rating desc;
+
+-- Select the payment date and amount columns from the payment table for the first 20 payments ordered by payment amount in descending order.
+select payment_date, amount from payment order by amount desc limit 20;
+
+-- Select the title, description, special features, length, and rental duration columns from the film table for the first 10 films with behind the scenes footage under 2 hours in length and a rental duration between 5 and 7 days, ordered by length in descending order.
+select title, description, special_features, length, rental_duration 
+from film 
+where special_features like '%Behind the Scenes%' and length < 120 and rental_duration between 5 and 7 
+order by length desc;
 
 -- JOINs
 -- Select customer first_name/last_name and actor first_name/last_name columns from performing a left join between the customer and actor column on the last_name column in each table. (i.e. customer.last_name = actor.last_name)
