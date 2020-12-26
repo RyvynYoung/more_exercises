@@ -519,22 +519,59 @@ order by length desc;
 
 -- JOINs
 -- Select customer first_name/last_name and actor first_name/last_name columns from performing a left join between the customer and actor column on the last_name column in each table. (i.e. customer.last_name = actor.last_name)
+select customer.first_name, customer.last_name, actor.first_name, actor.last_name
+from customer
+left join actor on customer.last_name = actor.last_name;
+
 -- Label customer first_name/last_name columns as customer_first_name/customer_last_name
+select customer.first_name as customer_first_name, customer.last_name as customer_last_name, actor.first_name, actor.last_name
+from customer
+left join actor on customer.last_name = actor.last_name;
+
 -- Label actor first_name/last_name columns in a similar fashion.
+select customer.first_name as customer_first_name, customer.last_name as customer_last_name, actor.first_name as actor_first_name, actor.last_name as actor_last_name
+from customer
+left join actor on customer.last_name = actor.last_name;
 -- returns correct number of records: 599
+-- incorrect, returns 620 rows
+
 -- Select the customer first_name/last_name and actor first_name/last_name columns from performing a /right join between the customer and actor column on the last_name column in each table. (i.e. customer.last_name = actor.last_name)
+select customer.first_name as customer_first_name, customer.last_name as customer_last_name, actor.first_name as actor_first_name, actor.last_name as actor_last_name
+from customer
+right join actor on customer.last_name = actor.last_name;
 -- returns correct number of records: 200
+-- correct returns 200 rows
+
 -- Select the customer first_name/last_name and actor first_name/last_name columns from performing an inner join between the customer and actor column on the last_name column in each table. (i.e. customer.last_name = actor.last_name)
+select customer.first_name as customer_first_name, customer.last_name as customer_last_name, actor.first_name as actor_first_name, actor.last_name as actor_last_name
+from customer
+join actor on customer.last_name = actor.last_name;
 -- returns correct number of records: 43
+-- correct returns 43 rows
+
 -- Select the city name and country name columns from the city table, performing a left join with the country table to get the country name column.
+select city, country 
+from city
+left join country on city.country_id = country.country_id;
 -- Returns correct records: 600
+-- correct 600 rows
+
 -- Select the title, description, release year, and language name columns from the film table, performing a left join with the language table to get the "language" column.
 -- Label the language.name column as "language"
+select title, description, release_year, language.name as language
+from film 
+join language on language.language_id = film.language_id;
 -- Returns 1000 rows
+-- correct returns 1000 rows
+
 -- Select the first_name, last_name, address, address2, city name, district, and postal code columns from the staff table, 
 -- performing 2 left joins with the address table then the city table to get the address and city related columns.
+select first_name, last_name, address, address2, city, district, postal_code 
+from staff 
+left join address on address.address_id = staff.address_id
+left join city on city.city_id = address.city_id;
 -- returns correct number of rows: 2
-
+-- correct 2 rows
 
 -- What is the average replacement cost of a film? Does this change depending on the rating of the film?
 -- +-----------------------+
