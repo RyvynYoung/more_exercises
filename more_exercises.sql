@@ -574,6 +574,7 @@ left join city on city.city_id = address.city_id;
 -- correct 2 rows
 
 -- What is the average replacement cost of a film? Does this change depending on the rating of the film?
+select avg(replacement_cost) from film;
 -- +-----------------------+
 -- | AVG(replacement_cost) |
 -- +-----------------------+
@@ -581,6 +582,7 @@ left join city on city.city_id = address.city_id;
 -- +-----------------------+
 -- 1 row in set (2.39 sec)
 
+select rating, avg(replacement_cost) from film group by rating;
 -- +--------+-----------------------+
 -- | rating | AVG(replacement_cost) |
 -- +--------+-----------------------+
@@ -594,6 +596,11 @@ left join city on city.city_id = address.city_id;
 
 
 -- How many different films of each genre are in the database?
+select category.name, count(title) as count 
+from category 
+join film_category using (category_id) 
+join film using (film_id) 
+group by category.name;
 -- +-------------+-------+
 -- | name        | count |
 -- +-------------+-------+
@@ -618,6 +625,14 @@ left join city on city.city_id = address.city_id;
 
 
 -- What are the 5 frequently rented films?
+select title, count(inventory_id) as total 
+from film 
+join inventory using (film_id) 
+join rental using (inventory_id) 
+group by title
+order by total desc
+limit 5;
+
 -- +---------------------+-------+
 -- | title               | total |
 -- +---------------------+-------+
@@ -632,6 +647,14 @@ left join city on city.city_id = address.city_id;
 
 
 -- What are the most most profitable films (in terms of gross revenue)?
+select title, sum(amount) as total 
+from film 
+join inventory using (film_id)
+join rental using (inventory_id)  
+join payment using (rental_id)
+group by title
+order by total desc
+limit 5;
 -- +-------------------+--------+
 -- | title             | total  |
 -- +-------------------+--------+
@@ -645,6 +668,12 @@ left join city on city.city_id = address.city_id;
 
 
 -- Who is the best customer?
+select concat(last_name, ', ', first_name) as customer, sum(amount) as total 
+from customer 
+join payment using (customer_id)
+group by customer
+order by total desc
+limit 1;
 -- +------------+--------+
 -- | name       | total  |
 -- +------------+--------+
@@ -654,6 +683,7 @@ left join city on city.city_id = address.city_id;
 
 
 -- Who are the most popular actors (that have appeared in the most films)?
+
 -- +-----------------+-------+
 -- | actor_name      | total |
 -- +-----------------+-------+
