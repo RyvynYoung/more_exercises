@@ -1,0 +1,75 @@
+SELECT SUM(CITY.POPULATION) FROM CITY 
+JOIN COUNTRY ON COUNTRY.CODE = CITY.COUNTRYCODE 
+WHERE CONTINENT = 'Asia';
+
+SELECT CITY.NAME FROM CITY 
+JOIN COUNTRY ON COUNTRY.CODE = CITY.COUNTRYCODE 
+WHERE CONTINENT = 'Africa';
+
+SELECT COUNTRY.Continent, FLOOR(AVG(CITY.POPULATION)) FROM CITY 
+JOIN COUNTRY ON COUNTRY.CODE = CITY.COUNTRYCODE
+GROUP BY Continent;
+
+
+https://www.geeksforgeeks.org/calculate-median-in-mysql/
+SET @rowindex := -1;
+ 
+SELECT
+   AVG(d.distance) as Median 
+FROM
+   (SELECT @rowindex:=@rowindex + 1 AS rowindex,
+           demo.distance AS distance
+    FROM demo
+    ORDER BY demo.distance) AS d
+WHERE
+d.rowindex IN (FLOOR(@rowindex / 2), CEIL(@rowindex / 2));
+
+
+
+Given the table schemas below, write a query to print the company_code, 
+founder name, total number of lead managers, total number of senior managers, 
+total number of managers, and total number of employees. Order your output by 
+ascending company_code.
+
+select c.company_code, c.founder, 
+    count(distinct l.lead_manager_code), count(distinct s.senior_manager_code), 
+    count(distinct m.manager_code),count(distinct e.employee_code) 
+from Company c, Lead_Manager l, Senior_Manager s, Manager m, Employee e 
+where c.company_code = l.company_code 
+    and l.lead_manager_code=s.lead_manager_code 
+    and s.senior_manager_code=m.senior_manager_code 
+    and m.manager_code=e.manager_code 
+group by c.company_code, c.founder order by c.company_code;
+
+
+Write a query identifying the type of each record in the TRIANGLES table using its 
+three side lengths. Output one of the following statements for each record in the 
+table:
+
+Equilateral: It's a triangle with  sides of equal length.
+Isosceles: It's a triangle with  sides of equal length.
+Scalene: It's a triangle with  sides of differing lengths.
+Not A Triangle: The given values of A, B, and C don't form a triangle.
+https://www.w3schools.com/sql/func_mysql_case.asp
+
+SELECT CASE             
+            WHEN A + B > C AND B + C > A AND A + C > B THEN
+                CASE 
+                    WHEN A = B AND B = C THEN 'Equilateral'
+                    WHEN A = B OR B = C OR A = C THEN 'Isosceles'
+                    ELSE 'Scalene'
+                END
+            ELSE 'Not A Triangle'
+        END
+FROM TRIANGLES;
+
+
+Harry Potter and his friends are at Ollivander's with Ron, finally replacing Charlie's old broken wand.
+
+Hermione decides the best way to choose is by determining the minimum number of gold 
+galleons needed to buy each non-evil wand of high power and age. Write a query to 
+print the id, age, coins_needed, and power of the wands that Ron's interested in, 
+sorted in order of descending power. If more than one wand has same power, sort the 
+result in order of descending age.
+
+select w.id, p.age, w.coins_needed, w.power from Wands as w join Wands_Property as p on (w.code = p.code) where p.is_evil = 0 and w.coins_needed = (select min(coins_needed) from Wands as w1 join Wands_Property as p1 on (w1.code = p1.code) where w1.power = w.power and p1.age = p.age) order by w.power desc, p.age desc
