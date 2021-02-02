@@ -683,7 +683,12 @@ limit 1;
 
 
 -- Who are the most popular actors (that have appeared in the most films)?
-
+select CONCAT(last_name, ", ", first_name) as actor_name, count(film_id) as total
+from actor
+join film_actor using(actor_id)
+group by actor_name
+order by total DESC
+limit 5;
 -- +-----------------+-------+
 -- | actor_name      | total |
 -- +-----------------+-------+
@@ -696,7 +701,13 @@ limit 1;
 -- 5 rows in set (0.07 sec)
 
 
+
 -- What are the sales for each store for each month in 2005?
+SELECT CONCAT(year(payment_date), "-", month(payment_date)) as SaleDate, store_id, sum(amount) 
+from payment
+join staff using(staff_id)
+WHERE payment_date like '2005%'
+GROUP BY SaleDate, store_id;
 -- +---------+----------+----------+
 -- | month   | store_id | sales    |
 -- +---------+----------+----------+
@@ -711,8 +722,45 @@ limit 1;
 -- +---------+----------+----------+
 -- 8 rows in set (0.14 sec)
 
+/* Temp table method
+use darden_1030;
+DROP TEMPORARY TABLE IF EXISTS payment_month;
+
+CREATE TEMPORARY TABLE payment_month as
+SELECT staff_id, amount, payment_date, store_id
+FROM sakila.payment
+JOIN sakila.staff USING(staff_id);
+
+ALTER TABLE payment_month ADD SalesMonth TINYINT(3);
+ALTER TABLE payment_month ADD SalesYear SMALLINT(5);
+
+UPDATE payment_month
+SET SalesMonth = month(payment_date);
+
+UPDATE payment_month
+SET SalesYear = year(payment_date);
+
+select *
+from payment_month;
+
+select CONCAT(SalesYear, "-", SalesMonth) as SalesDate, store_id, sum(amount)
+from payment_month
+GROUP BY SalesDate, store_id; */
+
+
+
 
 -- Bonus: Find the film title, customer name, customer phone number, and customer address for all the outstanding DVDs.
+select title, CONCAT(last_name, ', ', first_name) as customer_name, phone, address, city, country, postal_code
+from rental 
+join inventory using(inventory_id)
+join film using(film_id)
+join customer using(customer_id)
+join address using(address_id)
+join city using(city_id)
+join country using(country_id)
+where return_date IS NULL; 
+
 -- +------------------------+------------------+--------------+
 -- | title                  | customer_name    | phone        |
 -- +------------------------+------------------+--------------+
