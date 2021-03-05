@@ -13,10 +13,10 @@ with open(filename) as f:
     # use the next function one time to retrive just the first line of the file and store as header_row
     header_row = next(reader)
     
-    # print the index and value of header in the header_row 
-    # enumerate() function returns both the index of each item and the value of each item as you loop through a list
-    #-for index, column_header in enumerate(header_row):
-    #-    print(index, column_header)
+    # # print the index and value of header in the header_row 
+    # # enumerate() function returns both the index of each item and the value of each item as you loop through a list
+    # for index, column_header in enumerate(header_row):
+    #     print(index, column_header)
     
     # Get dates and high temperatures from this file
     dates, highs = [], []
