@@ -97,3 +97,33 @@ ALTER TABLE companies
 
 CHANGE COLUMN headquarters_phone_number headquarters_phone_number VARCHAR(255) NOT NULL;
 
+use employees;
+
+select dept_no from departments;
+
+select * from departments;
+
+select * from employees where first_name = 'Elvis';
+
+select * from employees where gender = 'F' and first_name = 'Kellie';
+
+select * from employees where first_name = 'Kellie' or first_name = 'Aruna';
+
+select * from employees where gender = 'F' and (first_name = 'Kellie' or first_name = 'Aruna');
+
+select * from employees where first_name IN ("Denis", "Elvis");
+
+select * from employees where first_name NOT IN ("John", "Mark", "Jacob");
+
+select * from employees where first_name like ('MarK%');
+
+select * from employees where hire_date like ('2000%');
+
+select * from employees where emp_no like ('1000_');
+
+select * from employees where first_name like ('%jack%');
+select * from employees where first_name not like ('%jack%');
+
+select * from salaries where salary between 66000 and 70000;
+select * from employees where emp_no not between 10004 and 10012;
+select * from departments where dept_no between 'd003' and 'd006';
