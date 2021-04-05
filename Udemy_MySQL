@@ -127,3 +127,49 @@ select * from employees where first_name not like ('%jack%');
 select * from salaries where salary between 66000 and 70000;
 select * from employees where emp_no not between 10004 and 10012;
 select * from departments where dept_no between 'd003' and 'd006';
+
+select * from departments where dept_no is not null;
+select distinct hire_date from employees;
+
+select count(salary) from salaries where salary >= 100000;
+select count(*) from dept_manager;
+
+select * from employees order by hire_date desc;
+
+select salary, count(emp_no) as 'emps_with_same_salary'
+ from salaries 
+ where salary > 80000 
+ group by salary
+ order by salary;
+
+ SELECT
+
+    emp_no, AVG(salary)
+
+FROM
+
+    salaries
+
+WHERE
+
+    salary > 120000
+
+GROUP BY emp_no
+
+ORDER BY emp_no;
+
+SELECT emp_no, AVG(salary)
+
+FROM salaries
+
+GROUP BY emp_no
+
+HAVING AVG(salary) > 120000;
+
+select emp_no from dept_emp
+where from_date >= '2000-01-01'
+group by emp_no
+having count(from_date) > 1
+order by emp_no;
+
+select * from dept_emp limit 100;
