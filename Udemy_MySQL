@@ -250,4 +250,42 @@ update departments
 set dept_name = 'Data Analysis'
 where dept_no = 'd010';
 
+select * from employees where emp_no = 999903;
+select * from titles where emp_no = 999903;
+delete from employees where emp_no = 999903;
+rollback;
+select * from departments_dup;
+delete from departments_dup;
+select * from departments order by dept_no;
+delete from departments where dept_no = 'd010';
 
+select count(*) from dept_emp;
+select * from dept_emp;
+select count(distinct dept_no) from dept_emp;
+
+select sum(salary) from salaries where from_date > '1997-01-01';
+select min(emp_no) from employees;
+select max(emp_no) from employees; 
+select avg(salary) from salaries where from_date > '1997-01-01';
+
+select round(avg(salary),2) from salaries where from_date > '1997-01-01';
+
+alter table departments_dup 
+change column dept_name dept_name varchar(40) null;
+insert into departments_dup(dept_no) values ('d010'), ('d011');
+
+select * from departments_dup order by dept_no;
+
+alter table employees.departments_dup 
+add column dept_manager varchar(255) null after dept_name;
+commit;
+
+select dept_no, ifnull(dept_name, 'Dept name not provided') as dept_name
+from departments_dup;
+select dept_no, coalesce(dept_name, 'Dept name not provided') as dept_name
+from departments_dup;
+select dept_no, dept_name, coalesce(dept_manager, dept_name, 'N/A') as dept_manager
+from departments_dup;
+select dept_no, dept_name, coalesce(dept_no, dept_name) as dept_info from departments_dup;
+select ifnull(dept_no, 'N/A') as dept_no, ifnull(dept_name, 'Dept Name not provided') as dept_name
+from departments_dup;
