@@ -289,3 +289,83 @@ from departments_dup;
 select dept_no, dept_name, coalesce(dept_no, dept_name) as dept_info from departments_dup;
 select ifnull(dept_no, 'N/A') as dept_no, ifnull(dept_name, 'Dept Name not provided') as dept_name
 from departments_dup;
+
+select * from departments_dup;
+alter table departments_dup
+drop column dept_manager;
+alter table departments_dup
+change column dept_no dept_no char(4) null;
+alter table departments_dup
+change column dept_name dept_name varchar(40) null;
+
+insert into departments_dup(dept_name) values ('Public Relations');
+delete from departments_dup where dept_no = 'd002';
+insert into departments_dup(dept_no) values ('d010'), ('d011');
+select * from departments_dup;
+
+drop table if exists dept_manager_dup;
+create table dept_manager_dup (
+emp_no int(11) not null,
+dept_no char(4) null,
+from_date date not null,
+to_date date null);
+
+insert into dept_manager_dup
+select * from dept_manager;
+
+insert into dept_manager_dup(emp_no, from_date)
+VALUES (999904, '2017-01-01'), (999905, '2017-01-01'), (999906, '2017-01-01'), (999907, '2017-01-01');
+
+delete from dept_manager_dup where dept_no = 'd001';
+
+select * from departments_dup;
+delete from departments_dup where dept_no = 'd010';
+delete from departments_dup where dept_no = 'd011';
+insert into departments_dup(dept_no) values ('d010'), ('d011');
+
+SELECT 
+    m.dept_no, m.emp_no, d.dept_name
+FROM
+    dept_manager_dup m
+        INNER JOIN
+    departments_dup d ON m.dept_no = d.dept_no
+ORDER BY m.dept_no;
+
+-- Extract a list containing information about all managers’ employee number, 
+-- first and last name, department number, and hire date.
+select * from dept_manager_dup;
+
+select m.emp_no, e.first_name, e.last_name, m.dept_no, e.hire_date
+from dept_manager m
+inner join employees e using(emp_no)
+order by hire_date;
+
+SELECT
+
+    e.emp_no,
+
+    e.first_name,
+
+    e.last_name,
+
+    dm.dept_no,
+
+    e.hire_date
+
+FROM
+
+    employees e
+
+        JOIN
+
+    dept_manager dm ON e.emp_no = dm.emp_no;
+
+insert into dept_manager_dup 
+values ('110228', 'd003', '1992-03-21', '9999-01-01');
+
+insert into departments_dup
+values ('d009', 'Customer Service');
+
+-- to eliminate possibility of duplicate records always group by the field that differs most
+--  in the query (ex. group by emp_no to prevent duplicates caused by above inserts)
+
